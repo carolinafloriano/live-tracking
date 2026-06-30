@@ -1,0 +1,516 @@
+/* ─── Design tokens ─────────────────────────────────────────────────────── */
+:root {
+  --bg-0: #050f1e;
+  --bg-1: #0a1a30;
+  --bg-2: #112240;
+  --bg-3: #1a3356;
+  --accent: #00d4ff;
+  --accent-dim: rgba(0, 212, 255, 0.14);
+  --accent-2: #4fc3f7;
+  --text-0: #e8f4fd;
+  --text-1: #8aafc4;
+  --text-2: #4a6882;
+  --border: rgba(0, 212, 255, 0.18);
+  --border-soft: rgba(255, 255, 255, 0.05);
+  --danger: #ff6b6b;
+  --success: #4ade80;
+  --mono: 'Courier New', Courier, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ─── Reset ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--sans);
+  background: var(--bg-0);
+  color: var(--text-0);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ─── App shell ──────────────────────────────────────────────────────────── */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.app-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────── */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  height: 52px;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  z-index: 1000;
+  gap: 1rem;
+}
+
+.app-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.app-header__title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.app-header__leg {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-2);
+  white-space: nowrap;
+  padding: 2px 6px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+
+/* ─── Live badge ─────────────────────────────────────────────────────────── */
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--success);
+  flex-shrink: 0;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.5); }
+  50% { opacity: 0.75; box-shadow: 0 0 0 5px rgba(74, 222, 128, 0); }
+}
+
+/* ─── Timestamp ──────────────────────────────────────────────────────────── */
+.last-update {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-2);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.last-update__time {
+  color: var(--text-1);
+}
+
+/* ─── Sidebar ────────────────────────────────────────────────────────────── */
+.sidebar {
+  width: 310px;
+  min-width: 310px;
+  background: var(--bg-1);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  color: var(--text-2);
+  padding: 0.7rem 1rem 0.5rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+/* ─── Boat list ──────────────────────────────────────────────────────────── */
+.boat-list {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.boat-list::-webkit-scrollbar { width: 3px; }
+.boat-list::-webkit-scrollbar-track { background: transparent; }
+.boat-list::-webkit-scrollbar-thumb { background: var(--bg-3); border-radius: 2px; }
+
+.boat-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1rem;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-soft);
+  color: var(--text-0);
+  text-align: left;
+  transition: background 0.12s;
+}
+
+.boat-item:hover { background: var(--bg-3); }
+.boat-item--selected {
+  background: var(--accent-dim);
+  border-left: 2px solid var(--accent);
+  padding-left: calc(1rem - 2px);
+}
+
+.boat-item__rank {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  width: 28px;
+  flex-shrink: 0;
+}
+
+.boat-item__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.boat-item__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.boat-item__name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.boat-item__sail {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-2);
+  margin-top: 2px;
+}
+
+.boat-item__metrics {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.mono-value {
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.mono-value .unit {
+  font-size: 0.65rem;
+  color: var(--text-2);
+  font-weight: 400;
+}
+
+.mono-sub {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-2);
+  margin-top: 2px;
+}
+
+/* ─── Boat detail ────────────────────────────────────────────────────────── */
+.boat-detail {
+  border-top: 1px solid var(--border);
+  background: var(--bg-0);
+  overflow-y: auto;
+  max-height: 58%;
+  padding: 0.9rem;
+}
+
+.boat-detail::-webkit-scrollbar { width: 3px; }
+.boat-detail::-webkit-scrollbar-thumb { background: var(--bg-3); border-radius: 2px; }
+
+.boat-detail__header {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.7rem;
+}
+
+.boat-detail__accent-bar {
+  width: 3px;
+  height: 38px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.boat-detail__title { flex: 1; min-width: 0; }
+
+.boat-detail__name {
+  font-size: 0.98rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.boat-detail__sail {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-2);
+  display: block;
+  margin-top: 2px;
+}
+
+.close-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-1);
+  width: 27px;
+  height: 27px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.12s, color 0.12s;
+}
+
+.close-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.boat-detail__illustration {
+  margin-bottom: 0.75rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  background: var(--bg-1);
+  overflow: hidden;
+}
+
+/* ─── Skipper card ───────────────────────────────────────────────────────── */
+.skipper-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+}
+
+.skipper-card__info { flex: 1; min-width: 0; }
+
+.skipper-card__role {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  color: var(--text-2);
+  margin-bottom: 2px;
+}
+
+.skipper-card__name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.skipper-card__team {
+  font-size: 0.72rem;
+  color: var(--text-1);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ─── Stats grid ─────────────────────────────────────────────────────────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.stat-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0.55rem 0.65rem;
+}
+
+.stat-card__label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: var(--text-2);
+  margin-bottom: 3px;
+}
+
+.stat-card__value {
+  font-family: var(--mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-0);
+  line-height: 1.1;
+}
+
+.stat-card__value--accent { color: var(--accent); font-size: 1.25rem; }
+
+.stat-card__unit {
+  font-size: 0.65rem;
+  color: var(--text-2);
+  font-weight: 400;
+}
+
+/* ─── Coordinates ────────────────────────────────────────────────────────── */
+.coords-panel {
+  margin-bottom: 0.75rem;
+}
+
+.coords-panel__label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: var(--text-2);
+  margin-bottom: 4px;
+}
+
+.coords-panel__values {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--accent-2);
+}
+
+/* ─── History ────────────────────────────────────────────────────────────── */
+.history-panel { }
+
+.history-list {
+  margin-top: 0.45rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.history-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  color: var(--text-1);
+  padding: 0.28rem 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.history-row:last-child { border-bottom: none; }
+
+.history-row__idx { color: var(--text-2); width: 16px; flex-shrink: 0; }
+.history-row__coords { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.history-row__time { color: var(--text-2); white-space: nowrap; flex-shrink: 0; }
+
+/* ─── Map wrapper ────────────────────────────────────────────────────────── */
+.map-wrap {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
+/* ─── Leaflet overrides ──────────────────────────────────────────────────── */
+.leaflet-container {
+  background: #050f1e !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(5, 15, 30, 0.75) !important;
+  color: rgba(138, 175, 196, 0.7) !important;
+  font-size: 9px !important;
+}
+
+.leaflet-control-attribution a {
+  color: rgba(0, 212, 255, 0.6) !important;
+}
+
+/* Popup */
+.leaflet-popup-content-wrapper {
+  background: var(--bg-2) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5) !important;
+  padding: 0 !important;
+}
+
+.leaflet-popup-tip-container { display: none; }
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  width: auto !important;
+}
+
+.popup-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0.6rem 0.8rem;
+}
+
+.popup-rank {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.popup-name {
+  font-size: 0.88rem;
+  color: var(--text-0);
+}
+
+.popup-sail {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-2);
+}
+
+.popup-stats {
+  display: flex;
+  gap: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--accent-2);
+  margin-top: 3px;
+}
+
+.leaflet-popup-close-button {
+  color: var(--text-1) !important;
+  font-size: 14px !important;
+  top: 4px !important;
+  right: 6px !important;
+}
